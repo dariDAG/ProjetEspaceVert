@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte - la boutique {% endblock %}
+
+{% block content %}
+
+    <h1>Mon Compte</h1>
+    
+    Bienvenue {{ app.user.firstname }} sur ton Compte de L'Espace Verte en ligne.
+
+    <br>
+
+    <a href="{{ path('account_password') }}"> Modifier mon mot de passe. </a> 
+    
+    <br>
+
+    -ajouter mes adresses  
+    
+    
+    <br>
+    
+    -mes commandes
+    
+    <br> 
+    <br> 
+{% endblock %}
