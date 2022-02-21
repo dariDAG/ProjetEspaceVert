@@ -13,7 +13,9 @@ body {
    
     width: 100%;
     background-color: rgb(196, 250, 186);
-    padding-top: 25px;
+    padding-top: 20px;
+
+    margin-top: 50px;
 }
 
 .product-item h5 {
@@ -43,6 +45,11 @@ body {
 
 .product-page-price {
    font-size: 20px; 
+}
+
+.cart-icon{
+    height: 25px;
+    padding-left: 25px
 }
 
 
