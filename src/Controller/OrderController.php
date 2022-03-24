@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Order;
-use App\Entity\OrderDetails;
 use App\Form\OrderType;
+use App\Entity\OrderDetails;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,11 +65,11 @@ class OrderController extends AbstractController
             $delivery_content .= '<br/>'.$delivery->getPostal().''.$delivery->getCity();
             $delivery_content .= '<br/>'.$delivery->getCountry();
             
-            
-            
             //enregister ma commande order()
             
             $order = new Order();
+            $reference = $date->format(format: 'dmY').'-'.uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreatedAt($date);
             $order->setCarrierName($carriers->getName());
@@ -92,11 +92,12 @@ class OrderController extends AbstractController
             }
 
             $this->entityManager->flush();
-            
+
             return $this->render('order/add.html.twig', [
             'cart' => $cart->getFull(),
             'carrier' => $carriers,
             'delivery' => $delivery_content,
+            'reference' => $order->getReference(),
             ]);
         } 
 
