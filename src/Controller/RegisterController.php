@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
-use Monolog\Handler\Handler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,9 @@ class RegisterController extends AbstractController
 
     #[Route('/inscription', name: 'register')]
     public function index(Request $request, UserPasswordHasherInterface $hasher): Response
-    {
+    {   
+        $notification = null;
+
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
 
@@ -33,17 +35,33 @@ class RegisterController extends AbstractController
             
             $user = $form->getData();
 
-            $password = $hasher->hashPassword($user, $user->getPassword());
+            $search_email = $this->entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
             
-            $user->setPassword($password);
-            //dd($user);
+            if (!$search_email){
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+                $password = $hasher->hashPassword($user, $user->getPassword());
+            
+                $user->setPassword($password);
+            
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $mail = new Mail();
+                $content = "Bonjour ".$user->getFirstname()." ".$user->getLastname()."<br/>Bienvenue sur l'Espace Vert en ligne.<br><br/>Voici un espace en ligne pour tous vos commandes pour votre espace verte";
+                $mail->send($user->getEmail(), $user->getFirstname(), "Bienvenue sur l'Espace Vert en ligne", $content); 
+
+                $notification = "Votre inscription a été prise en compte. Vous pouvez dès à present vous connecter à votre compte personnel.";
+
+            } else {
+
+                $notification = "Cette adresse email existe déjà ";
+            }
+
         };
 
         return $this->render('register/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'notification' => $notification,
         ]);
     }
 }

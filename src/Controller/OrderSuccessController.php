@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,9 @@ class OrderSuccessController extends AbstractController
             $this->entityManager->flush();
 
             //envoyer un email à notre client pour lui confirmer sa commande
+            $mail = new Mail();
+            $content = "Bonjour ".$order->getUser()->getFirstname()." ".$order->getUser()->getLastname()."<br/>Merci pour votre commande en ligne.<br><br/>Voici un espace en ligne pour tous vos commandes pour votre espace verte";
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), "Votre commande sur l'Espace Vert en ligne a bien été validé.", $content);
         }
         
          

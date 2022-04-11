@@ -36,7 +36,7 @@ class RegisterType extends AbstractType
                 'label'=> 'Votre Email',
                 'constraints'=>new Length([
                     'min' => 2,
-                    'max' => 30
+                    'max' => 60
                 ]),
                 'attr'=> [
                     'placeholder' => 'Merci de saisir votre Email.'
