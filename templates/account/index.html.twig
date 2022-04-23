@@ -5,14 +5,32 @@
 {% block content %}
 
     <h1>Mon Compte</h1>
-    
+    {% if is_granted('ROLE_ADMIN') %}
+        <small><a href="/admin">- Vous avez le Role Administrateur, vous pouvez acceder au backOffice. </a></small><br>
+    {% endif %}
+
     Bienvenue {{ app.user.firstname }} sur ton Compte de L'Espace Verte en ligne.
 
     <hr>
-
-    <a href="{{ path('account_password') }}">- Modifier mon mot de passe. </a><br>
-    <a href="{{ path('account_address') }}">- Gérer mes adresses. </a><br> 
-    <a href="{{ path('account_order') }}">- Mes commandes. </a><br>
-    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="account-item text-center">
+                <img src="{{ asset('/assets/img/purchase.png')}}" alt="commande"><br>
+                <a href="{{ path('account_order') }}">- Mes commandes. </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="account-item text-center">
+                <img src="{{ asset('/assets/img/address.png')}}" alt="adresse"><br>
+                <a href="{{ path('account_address') }}">- Gérer mes adresses. </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="account-item text-center">
+                <img src="{{ asset('/assets/img/password.png')}}" alt="mdp"><br>
+                <a href="{{ path('account_password') }}">- Modifier mon mot de passe. </a>
+            </div>
+        </div>
+    </div>
     <hr> 
 {% endblock %}

@@ -3,13 +3,17 @@
 {% block title %}Mes Adresses - la boutique Espace Verte en ligne {% endblock %}
 
 {% block content %}
-
-    <a href="{{ path('account_address_add') }}" class="btn btn-info btn-sm float-right">Ajouter une adresse </a>
+    <br/>
     <h1>Mes Adresses</h1>
-    C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.<br>
-
-    <a href="{{ path('account') }}"> Retour </a> 
-    
+    <p>C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.</p>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{{ path('account_address_add') }}"> Ajouter une adresse </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path('account') }}"> Retour </a> 
+        </div>
+    </div>
     <hr>
     {# {{ dump(app.user)}}; #}
     {% if app.user.addresses|length == 0 %}
@@ -19,10 +23,10 @@
     {% else %}
     <div class="row">
         {% for address in app.user.addresses %}
-            <div class="col-md-4">
+            <div class="col-md-4 ">
                 <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                    <div class="card-body border border-success rounded">
+                        <h5 class="card-title">Adresse de livraison</h5>
                         <p class="card-text">
                             {{ (address.address) }},<br>
                             {{ (address.postal) }} - {{ (address.city) }} - {{ (address.country) }}
@@ -34,7 +38,7 @@
         {% endfor %}
         
     </div>
-          
+    <hr>      
     {% endif %}
       
 {% endblock %}

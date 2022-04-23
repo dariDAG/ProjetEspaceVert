@@ -5,11 +5,10 @@
 {% block content %}
 
     <h1>Mes Commandes</h1>
-
-    Espace de gestion de toutes vos Commandes.<br>
-
-    <a href="{{ path('account') }}"> Retour </a> 
-    
+    <hr>
+    <h3>Espace de gestion de toutes vos Commandes.</h3>
+    <a href="{{ path('account') }}"> Retour </a>
+     
     {# {{ dump(app.user)}}; #}
     {% if orders|length == 0 %}
         <hr>
